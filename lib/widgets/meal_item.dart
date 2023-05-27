@@ -8,6 +8,7 @@ class MealItem extends StatelessWidget {
 
   final Meal meal;
 
+
   @override
   Widget build(BuildContext context) {
     return Card(
