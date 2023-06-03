@@ -4,16 +4,17 @@ import 'package:meals_app/widgets/meal_item.dart';
 import 'package:meals_app/screens/meal_detail_screen.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({Key? key, required this.title, required this.meals})
+  const MealsScreen({Key? key, this.title, required this.meals, required this.onFavoriteIcon})
       : super(key: key);
 
-  final String title;
+  final String? title;
   final List<Meal> meals;
+  final void Function (Meal meal) onFavoriteIcon;
 
   void _selectRecipe(BuildContext context, Meal meal) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) => MealDetailScreen(
+        builder: (ctx) => MealDetailScreen(onFavoriteIcon: onFavoriteIcon,
           meal: meal,
         ),
       ),
@@ -45,21 +46,28 @@ class MealsScreen extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            Text(
-              "Try Selecting a different category!",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
-            ),
+            title != null
+                ? Text(
+                    "Try Selecting a different category!",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
+                  )
+                : Text(
+                    "No item found in the favorite section",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground),
+                  ),
           ],
         ),
       );
     }
 
+    if (title == null) {
+      return content;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
       ),
       body: content,
     );
