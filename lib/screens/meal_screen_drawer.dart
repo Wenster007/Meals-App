@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class MealScreenDrawer extends StatelessWidget {
-  const MealScreenDrawer({Key? key}) : super(key: key);
+  const MealScreenDrawer({Key? key, required this.onSelectScreen}) : super(key: key);
+
+  final void Function(String identifier) onSelectScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -9,7 +11,7 @@ class MealScreenDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: LinearGradient(colors: [
                 Theme.of(context).colorScheme.primaryContainer,
@@ -49,8 +51,24 @@ class MealScreenDrawer extends StatelessWidget {
                     fontSize: 24,
                   ),
             ),
-            onTap: () {},
-          )
+            onTap: () {onSelectScreen("meals");},
+          ),
+          ListTile(
+            leading: Icon(
+              Icons.restaurant,
+              color: Theme.of(context).colorScheme.onBackground,
+              size: 26,
+            ),
+            title: Text(
+              "Filters",
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24,
+              ),
+            ),
+            onTap: () {onSelectScreen("filters");},
+          ),
+
         ],
       ),
     );
